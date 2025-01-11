@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-miyazakispmanage-dev-ae800-authRole",
+      "UnauthRoleArn": "arn:aws:iam::471112653249:role/amplify-miyazakispmanage-dev-ae800-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::471112653249:role/amplify-miyazakispmanage-dev-ae800-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-miyazakispmanage-dev-ae800-deployment",
+      "UnauthRoleName": "amplify-miyazakispmanage-dev-ae800-unauthRole",
+      "StackName": "amplify-miyazakispmanage-dev-ae800",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:471112653249:stack/amplify-miyazakispmanage-dev-ae800/d4a295f0-d054-11ef-92b0-0669ff3babeb",
+      "AmplifyAppId": "d9zydoq8cyegg"
+    }
+  }
+}
