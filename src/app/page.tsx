@@ -2,7 +2,7 @@
 
 import { Authenticated, useResource } from "@refinedev/core";
 import { useRouter } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, Fragment } from "react";
 
 export default function IndexPage() {
   const { resources } = useResource();
@@ -14,15 +14,15 @@ export default function IndexPage() {
     <Suspense>
       <Authenticated key="home-page">
         {resources && resources.length > 0 ? (
-          <>
+          <Fragment>
             <h1>Redirecting to {resources[0]?.name}</h1>
             {router.push(resources[0]?.route || "/")}
-          </>
+          </Fragment>
         ) : (
-          <>
+          <Fragment>
             <h1>Welcome</h1>
             <p>No resources available. Please configure your resources.</p>
-          </>
+          </Fragment>
         )}
       </Authenticated>
     </Suspense>
