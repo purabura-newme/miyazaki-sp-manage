@@ -1,27 +1,27 @@
 // components/AdminApp.tsx
 "use client";
 
-import jsonServerProvider from "ra-data-json-server";
+import "@aws-amplify/ui-react/styles.css";
 import { Admin, EditGuesser, ListGuesser, Resource } from "react-admin";
+import {
+  firebaseDataProvider,
+} from '../firebaseConfig';
+import authProvider from '../providers/authProvider';
 
-const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
+const AdminApp = () => {
+  if (!firebaseDataProvider) {
+    return <div>Loading...</div>; // firebaseDataProvider がまだ初期化されていない場合
+  }
 
-const AdminApp = () => (
-  <Admin dataProvider={dataProvider}>
-    <Resource
-      name="users"
-      list={ListGuesser}
-      edit={EditGuesser}
-      recordRepresentation="name"
-    />
-    <Resource
-      name="posts"
-      list={ListGuesser}
-      edit={EditGuesser}
-      recordRepresentation="title"
-    />
-    <Resource name="comments" list={ListGuesser} edit={EditGuesser} />
-  </Admin>
-);
+  return (
+    <Admin authProvider={authProvider} dataProvider={firebaseDataProvider}>
+      <Resource
+        name="notifications"
+        list={ListGuesser}
+        edit={EditGuesser}
+      />
+    </Admin>
+  );
+};
 
 export default AdminApp;

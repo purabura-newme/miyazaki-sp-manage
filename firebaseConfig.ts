@@ -7,7 +7,6 @@ import {
     FirebaseDataProvider,
     RAFirebaseOptions,
 } from 'react-admin-firebase';
-  
 
 const firebaseConfig = {
     apiKey: "AIzaSyDaTb3iitvXkbQgYMOWD7lYtVY4Ot8EIM4",
@@ -29,4 +28,7 @@ const options: RAFirebaseOptions = {
     associateUsersById: false,
   };
 
-export const firebaseDataProvider = FirebaseDataProvider(firebaseConfig, options);
+// FirebaseDataProvider を初期化（クライアントサイド専用）
+export const firebaseDataProvider = typeof window !== 'undefined'
+  ? FirebaseDataProvider(firebaseConfig, options)
+  : null;
