@@ -1,7 +1,9 @@
 import {
+    getAuth,
     signInWithEmailAndPassword,
     signOut,
 } from 'firebase/auth';
+import Cookies from 'js-cookie';
 import { AUTH_CHECK, AUTH_ERROR, AUTH_GET_PERMISSIONS, AUTH_LOGIN, AUTH_LOGOUT } from 'react-admin';
 import { auth } from '../firebaseConfig';
 
@@ -20,35 +22,36 @@ const authProvider = async (type: AuthProviderType, params: AuthProviderParams) 
             const user = auth.currentUser;
             if (user) {
                 console.log(user);
-                if (typeof window !== 'undefined') {
-                    window.localStorage.setItem("user", JSON.stringify(user));
-                }
+                // クッキーにユーザー情報を保存
+                Cookies.set('user', JSON.stringify(user), { expires: 7 }); // 7日間有効
                 return Promise.resolve();
             }
         } catch {
-            return Promise.reject();
+            return Promise.reject('Invalid login');
         }
     }
     if (type === AUTH_LOGOUT) {
-        if (typeof window !== 'undefined') {
-            window.localStorage.removeItem('user');
-            window.localStorage.removeItem('role');
-        }
+        // クッキーからユーザー情報と役割を削除
+        Cookies.remove('user');
+        Cookies.remove('role');
         await signOut(auth);
         return Promise.resolve();
     }
     if (type === AUTH_ERROR) {
-        // ...
+        // 必要に応じてエラーハンドリングを実装
     }
     if (type === AUTH_CHECK) {
-        return window.localStorage.getItem('user') ? Promise.resolve() : Promise.reject();
+        // クッキーからユーザー情報を取得して存在を確認
+        const user = Cookies.get('user');
+        const auth = getAuth();
+        const firebaseUser = auth.currentUser;
+        return user && firebaseUser ? Promise.resolve() : Promise.reject('Unauthorized');
     }
     if (type === AUTH_GET_PERMISSIONS) {
-        const role = localStorage.getItem('role');
+        // クッキーから役割情報を取得
+        const role = Cookies.get('role');
         return role ? Promise.resolve(role) : Promise.reject();
-        return Promise.resolve();
     }
-    return Promise.reject('Unknown method');
 };
 
 export default authProvider;

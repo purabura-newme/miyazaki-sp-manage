@@ -23,7 +23,8 @@ const Login = () => {
       notify("ログイン成功", { type: "success" });
       navigate("/notifications"); // 明示的に遷移
     } catch (error) {
-      notify("ログインに失敗しました", { type: "error" });
+      console.error(error);
+      notify(`ログインに失敗しました: ${error}`, { type: "error" });
     } finally {
       setLoading(false);
     }
