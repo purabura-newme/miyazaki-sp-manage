@@ -45,16 +45,12 @@ const authProvider = async (type: AuthProviderType, params: AuthProviderParams) 
         const user = Cookies.get('user');
         const auth = getAuth();
         const firebaseUser = auth.currentUser;
-        console.log("check user");
-        console.log(user);
-        return user ? Promise.resolve() : Promise.reject('Unauthorized');
+        return user && firebaseUser ? Promise.resolve() : Promise.reject('Unauthorized');
     }
     if (type === AUTH_GET_PERMISSIONS) {
         // クッキーから役割情報を取得
-        // const role = Cookies.get('role');
-        // console.log("check role");
-        // console.log(role);
-        // return role ? Promise.resolve(role) : Promise.reject();
+        const role = Cookies.get('role');
+        return role ? Promise.resolve(role) : Promise.reject();
     }
 };
 
